@@ -1,0 +1,98 @@
+{
+  "cv_5fold_mean_std": {
+    "test_accuracy": [
+      0.9954033333333333,
+      0.0001820866704499927
+    ],
+    "train_accuracy": [
+      0.9999791666666666,
+      8.740073734766178e-06
+    ],
+    "test_precision_macro": [
+      0.9910401133095617,
+      0.0003078125003019006
+    ],
+    "train_precision_macro": [
+      0.9999652628161589,
+      1.881507570572279e-05
+    ],
+    "test_recall_macro": [
+      0.9932691863318995,
+      0.00032473003400268263
+    ],
+    "train_recall_macro": [
+      0.9999634227209011,
+      1.8815360319413858e-05
+    ],
+    "test_f1_macro": [
+      0.9921503164702008,
+      0.0003108566860638719
+    ],
+    "train_f1_macro": [
+      0.9999643423221334,
+      1.4959074127236796e-05
+    ]
+  },
+  "test_report": {
+    "BENIGN": {
+      "precision": 0.9981255294878894,
+      "recall": 0.9969716655839288,
+      "f1-score": 0.9975482638674762,
+      "support": 300165.0
+    },
+    "ATTACK": {
+      "precision": 0.9860649077892413,
+      "recall": 0.9913383885087232,
+      "f1-score": 0.9886946163009646,
+      "support": 64884.0
+    },
+    "accuracy": 0.9959704039731653,
+    "macro avg": {
+      "precision": 0.9920952186385653,
+      "recall": 0.994155027046326,
+      "f1-score": 0.9931214400842203,
+      "support": 365049.0
+    },
+    "weighted avg": {
+      "precision": 0.9959818682854341,
+      "recall": 0.9959704039731653,
+      "f1-score": 0.9959746119229275,
+      "support": 365049.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      299256,
+      909
+    ],
+    [
+      562,
+      64322
+    ]
+  ],
+  "train_seconds": 162.30024671554565,
+  "roc_auc": 0.9978210974470176,
+  "test_FPR": 0.0030283344160711607,
+  "test_detection_rate": 0.9913383885087232,
+  "feature_importance": {
+    "Flow Duration": 0.0612740156050262,
+    "Total Fwd Packets": 0.10784291279235692,
+    "Total Backward Packets": 0.09287040446936239,
+    "Total Length of Fwd Packets": 0.0779755068633305,
+    "Total Length of Bwd Packets": 0.1996557881099512,
+    "Fwd Packet Length Mean": 0.0788650772234642,
+    "Bwd Packet Length Mean": 0.24784371763235302,
+    "Flow Packets/s": 0.09260466222084268,
+    "Flow Bytes/s": 0.038829970177672986,
+    "SYN Flag Count": 0.002233898996983343,
+    "RST Flag Count": 4.0459086566161594e-06
+  },
+  "benign_score_percentiles": {
+    "50": 0.0,
+    "90": 0.0,
+    "99": 0.04,
+    "99.9": 0.96
+  },
+  "laptop_single_flow_ms": 4.007576162000078,
+  "model_file_mb": 22.573758
+}

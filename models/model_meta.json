@@ -1,0 +1,26 @@
+{
+  "features": [
+    "Flow Duration",
+    "Total Fwd Packets",
+    "Total Backward Packets",
+    "Total Length of Fwd Packets",
+    "Total Length of Bwd Packets",
+    "Fwd Packet Length Mean",
+    "Bwd Packet Length Mean",
+    "Flow Packets/s",
+    "Flow Bytes/s",
+    "SYN Flag Count",
+    "RST Flag Count"
+  ],
+  "classes": [
+    "BENIGN",
+    "ATTACK"
+  ],
+  "positive_class_index": 1,
+  "sklearn_version": "1.6.1",
+  "python_version": "3.13.15",
+  "trained_at": "2026-10-14T02:07:53",
+  "git_commit": "1f422cd",
+  "seed": 42,
+  "test_accuracy": 0.9959704039731653
+}
