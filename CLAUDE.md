@@ -48,7 +48,14 @@ Step 1 plan: ~~flash~~ → ~~first boot + SSH~~ (done 18 Oct) → ~~OS update~~ 
 Pi access (18 Oct): user `syakir`, IP **192.168.100.11** on home router (DHCP, may change; re-check with `ping ids-pi.local` in Windows PowerShell). WSL can't resolve `.local` but reaches the IP. Laptop must be on Ethernet (Wi-Fi couldn't reach the Pi). Password-free SSH from WSL with `~/.ssh/id_ed25519` (no passphrase); host key verified against Windows known_hosts. **sudo needs my password**, so admin commands are run by me in the Ubuntu terminal (`ssh -t ...`), not via `!`.
 Pi state: Debian 13 Trixie aarch64, Python 3.13.5, 3.7 GiB RAM, 24 GB free, 43.3°C, throttled=0x0.
 
-Next: install uv on the Pi, project venv with Python 3.13.15, pinned requirements, copy model, prove it loads.
+Why the OS update doesn't break report versions (decided 18 Oct): Table 3.4 names no OS version; we stay on Debian 13; the IDS runs in its own uv Python + pinned requirements, which apt doesn't touch. Report the ACTUAL versions in Chapter 4.
+Lesson: copy-paste long commands instead of typing them (a missing closing `'` makes bash show `>` and wait; press Ctrl+C).
+
+Next session, start here (step 5, no network changes):
+1. Pi on home router by Ethernet, laptop on Ethernet; check IP with `ping ids-pi.local` in PowerShell (was 192.168.100.11).
+2. Claude installs uv on the Pi (official astral.sh installer, user folder, no sudo; shows the commands first).
+3. `.venv` with Python 3.13.15, install pinned `requirements.txt`, copy `models/rf_model.joblib` + `model_meta.json`, prove the model loads and time a batch prediction.
+4. Then the CICFlowMeter on ARM64 test (install Java first; needs sudo, so I run it in the Ubuntu terminal).
 
 Shopping list: USB 3.0 Gigabit USB-to-Ethernet adapter (Realtek RTL8153 chip suggested by Claude, not yet tested on this Pi); heatsink kit or fan case.
 
