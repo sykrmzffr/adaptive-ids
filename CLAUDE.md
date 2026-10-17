@@ -27,6 +27,22 @@ Report evaluation targets (Table 3.10): detection rate ≥95% per attack; FPR(ad
 - Private GitHub repo; `.gitignore` excludes `.venv/ data/ __pycache__/ *.pyc *.joblib *.pcap *.db`.
 - **I now have the Raspberry Pi 4 (not yet set up).**
 
+## Pi setup progress (17 Oct 2026)
+
+Decided (my choice, on Claude's suggestion):
+- **Raspberry Pi OS Lite (64-bit)**, no desktop: more CPU/RAM left for the IDS. Still counts as "Raspberry Pi OS 64-bit" (Table 3.4).
+- Imager OS customisation: hostname `ids-pi`, my own user/password, time zone `Asia/Kuala_Lumpur`, **SSH on (password login for now)**, **Wi-Fi blank**, **Raspberry Pi Connect OFF** (extra service = CPU/RAM noise in measurements + outside traffic in captures; SSH is enough; can install later).
+- First boot plan: Ethernet to home router **for setup/updates only, never for attacks**.
+
+Status: **BLOCKED on the microSD card.**
+- During Imager write, Windows asked to format the card; I quick-formatted it (this wiped the write; not harmful). Lesson: **after flashing, always click Cancel on Windows' "format disk" prompt.**
+- On rewrite, Imager warned the storage is "fake" (exact wording not recorded), then the card stopped being detected. The laptop's built-in slot was already unreliable (needed reinserting).
+- Unknown cause: loose laptop slot vs counterfeit/failing card.
+- Next: (A) try the card in a different reader (USB reader / other laptop / phone). (B) if detected, run **H2testw** to check real capacity. If it fails, or was bought cheaply from an unknown seller, buy a genuine card (SanDisk/Samsung/Kingston, official store) + a USB card reader.
+- Still to answer: card brand/size/seller, built-in slot or USB reader, do I have the **USB-to-Ethernet adapter** yet, heatsink/fan?
+
+Step 1 plan after the card works: flash → first boot + SSH → OS update + check Python version → uv, venv, requirements, copy model, prove it loads → **CICFlowMeter test on ARM64**.
+
 ## Folder layout
 
 ```
@@ -94,6 +110,7 @@ Waiting on supervisor (meeting not yet held):
 - §3.5.1.3: says two DB tables; §3.4.7 has three.
 - Table 3.4: second NIC should be a USB-to-Ethernet adapter, not USB Wi-Fi.
 - §3.5.7: iptables blocking must include the FORWARD chain (gateway traffic), not only INPUT.
+- §3.5.1.1: says 64-bit is needed to "address more than 4 GB of memory", but the Pi has only 4 GB. Better reason: 64-bit gives each process its full address space and matches the ARM64 Python wheels we confirmed.
 
 ## Testbed plan (matches report Figure 3.3)
 
