@@ -34,14 +34,24 @@ Decided (my choice, on Claude's suggestion):
 - Imager OS customisation: hostname `ids-pi`, my own user/password, time zone `Asia/Kuala_Lumpur`, **SSH on (password login for now)**, **Wi-Fi blank**, **Raspberry Pi Connect OFF** (extra service = CPU/RAM noise in measurements + outside traffic in captures; SSH is enough; can install later).
 - First boot plan: Ethernet to home router **for setup/updates only, never for attacks**.
 
-Status: **BLOCKED on the microSD card.**
+Update: **cause found: the laptop's built-in SD slot is faulty.** Use a different reader from now on. No need to format before flashing (Imager overwrites the whole card; if needed, use Imager's "Erase" option = FAT32). If Imager's write + verify passes in the working reader, the card is very likely fine (H2testw only needed if problems return).
+
+Earlier status (kept for the record): **BLOCKED on the microSD card.**
 - During Imager write, Windows asked to format the card; I quick-formatted it (this wiped the write; not harmful). Lesson: **after flashing, always click Cancel on Windows' "format disk" prompt.**
 - On rewrite, Imager warned the storage is "fake" (exact wording not recorded), then the card stopped being detected. The laptop's built-in slot was already unreliable (needed reinserting).
 - Unknown cause: loose laptop slot vs counterfeit/failing card.
 - Next: (A) try the card in a different reader (USB reader / other laptop / phone). (B) if detected, run **H2testw** to check real capacity. If it fails, or was bought cheaply from an unknown seller, buy a genuine card (SanDisk/Samsung/Kingston, official store) + a USB card reader.
-- Still to answer: card brand/size/seller, built-in slot or USB reader, do I have the **USB-to-Ethernet adapter** yet, heatsink/fan?
+- 17 Oct: **flashed successfully** (verify passed). **No USB-to-Ethernet adapter yet** (needed by testbed step 7; buy soon). **No heatsink/fan, plain case only**: Pi 4 throttles when hot, which would distort CPU/latency results. Buy cooling before experiments; log temperature/throttling meanwhile.
 
-Step 1 plan after the card works: flash → first boot + SSH → OS update + check Python version → uv, venv, requirements, copy model, prove it loads → **CICFlowMeter test on ARM64**.
+Step 1 plan: ~~flash~~ (done) → **first boot + SSH (NEXT, paused: needs home router access)** → OS update + check Python version → uv, venv, requirements, copy model, prove it loads → **CICFlowMeter test on ARM64**.
+
+Next session, start here (first boot + SSH):
+1. SD card into the Pi, Ethernet to home router, then USB-C power; wait ~3 min (first boot may restart once).
+2. From Windows **PowerShell** (not WSL): `ssh USERNAME@ids-pi.local`, answer `yes` to the fingerprint prompt. If `.local` isn't found, get the Pi's IP from the router's device list and `ssh USERNAME@IP`.
+3. Tell Claude: did it work (`.local` or IP, and which IP) + Pi username.
+4. Then Claude sets up an SSH key from WSL (shows each command first) and checks OS version, Python version and temperature.
+
+Shopping list: USB 3.0 Gigabit USB-to-Ethernet adapter (Realtek RTL8153 chip suggested by Claude, not yet tested on this Pi); heatsink kit or fan case.
 
 ## Folder layout
 
