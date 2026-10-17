@@ -43,12 +43,12 @@ Earlier status (kept for the record): **BLOCKED on the microSD card.**
 - Next: (A) try the card in a different reader (USB reader / other laptop / phone). (B) if detected, run **H2testw** to check real capacity. If it fails, or was bought cheaply from an unknown seller, buy a genuine card (SanDisk/Samsung/Kingston, official store) + a USB card reader.
 - 17 Oct: **flashed successfully** (verify passed). **No USB-to-Ethernet adapter yet** (needed by testbed step 7; buy soon). **No heatsink/fan, plain case only**: Pi 4 throttles when hot, which would distort CPU/latency results. Buy cooling before experiments; log temperature/throttling meanwhile.
 
-Step 1 plan: ~~flash~~ → ~~first boot + SSH~~ (done 18 Oct) → **OS update (NEXT)** → uv, venv, requirements (my suggestion: uv Python 3.13.15 to match laptop), copy model, prove it loads → **CICFlowMeter test on ARM64** (Java not installed yet).
+Step 1 plan: ~~flash~~ → ~~first boot + SSH~~ (done 18 Oct) → ~~OS update~~ (done 18 Oct: 14 packages, Debian 13.7, kernel 6.18.50+rpt-rpi-v8; **OS frozen: no more updates until experiments finish**) → **uv (NEXT)**, venv, requirements (my suggestion: uv Python 3.13.15 to match laptop), copy model, prove it loads → **CICFlowMeter test on ARM64** (Java not installed yet).
 
 Pi access (18 Oct): user `syakir`, IP **192.168.100.11** on home router (DHCP, may change; re-check with `ping ids-pi.local` in Windows PowerShell). WSL can't resolve `.local` but reaches the IP. Laptop must be on Ethernet (Wi-Fi couldn't reach the Pi). Password-free SSH from WSL with `~/.ssh/id_ed25519` (no passphrase); host key verified against Windows known_hosts. **sudo needs my password**, so admin commands are run by me in the Ubuntu terminal (`ssh -t ...`), not via `!`.
 Pi state: Debian 13 Trixie aarch64, Python 3.13.5, 3.7 GiB RAM, 24 GB free, 43.3°C, throttled=0x0.
 
-Next: in the Ubuntu terminal run `ssh -t syakir@192.168.100.11 'sudo apt update && sudo apt full-upgrade -y && sudo reboot'`, then tell Claude.
+Next: install uv on the Pi, project venv with Python 3.13.15, pinned requirements, copy model, prove it loads.
 
 Shopping list: USB 3.0 Gigabit USB-to-Ethernet adapter (Realtek RTL8153 chip suggested by Claude, not yet tested on this Pi); heatsink kit or fan case.
 
