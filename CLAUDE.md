@@ -43,13 +43,12 @@ Earlier status (kept for the record): **BLOCKED on the microSD card.**
 - Next: (A) try the card in a different reader (USB reader / other laptop / phone). (B) if detected, run **H2testw** to check real capacity. If it fails, or was bought cheaply from an unknown seller, buy a genuine card (SanDisk/Samsung/Kingston, official store) + a USB card reader.
 - 17 Oct: **flashed successfully** (verify passed). **No USB-to-Ethernet adapter yet** (needed by testbed step 7; buy soon). **No heatsink/fan, plain case only**: Pi 4 throttles when hot, which would distort CPU/latency results. Buy cooling before experiments; log temperature/throttling meanwhile.
 
-Step 1 plan: ~~flash~~ (done) → **first boot + SSH (NEXT, paused: needs home router access)** → OS update + check Python version → uv, venv, requirements, copy model, prove it loads → **CICFlowMeter test on ARM64**.
+Step 1 plan: ~~flash~~ → ~~first boot + SSH~~ (done 18 Oct) → **OS update (NEXT)** → uv, venv, requirements (my suggestion: uv Python 3.13.15 to match laptop), copy model, prove it loads → **CICFlowMeter test on ARM64** (Java not installed yet).
 
-Next session, start here (first boot + SSH):
-1. SD card into the Pi, Ethernet to home router, then USB-C power; wait ~3 min (first boot may restart once).
-2. From Windows **PowerShell** (not WSL): `ssh USERNAME@ids-pi.local`, answer `yes` to the fingerprint prompt. If `.local` isn't found, get the Pi's IP from the router's device list and `ssh USERNAME@IP`.
-3. Tell Claude: did it work (`.local` or IP, and which IP) + Pi username.
-4. Then Claude sets up an SSH key from WSL (shows each command first) and checks OS version, Python version and temperature.
+Pi access (18 Oct): user `syakir`, IP **192.168.100.11** on home router (DHCP, may change; re-check with `ping ids-pi.local` in Windows PowerShell). WSL can't resolve `.local` but reaches the IP. Laptop must be on Ethernet (Wi-Fi couldn't reach the Pi). Password-free SSH from WSL with `~/.ssh/id_ed25519` (no passphrase); host key verified against Windows known_hosts. **sudo needs my password**, so admin commands are run by me in the Ubuntu terminal (`ssh -t ...`), not via `!`.
+Pi state: Debian 13 Trixie aarch64, Python 3.13.5, 3.7 GiB RAM, 24 GB free, 43.3°C, throttled=0x0.
+
+Next: in the Ubuntu terminal run `ssh -t syakir@192.168.100.11 'sudo apt update && sudo apt full-upgrade -y && sudo reboot'`, then tell Claude.
 
 Shopping list: USB 3.0 Gigabit USB-to-Ethernet adapter (Realtek RTL8153 chip suggested by Claude, not yet tested on this Pi); heatsink kit or fan case.
 
@@ -65,6 +64,7 @@ adaptive-ids/
 ├─ ids/schema.sql             (AI-written) SQLite schema: traffic_log, alerts, blocked_ips (WAL mode)
 ├─ ids/ (other files)         placeholders: main, capture, features, detector, blocker, db - NOT written yet
 ├─ dashboard/                 placeholder - NOT written yet
+├─ docs/                      CSP600 report PDF + progress-log.md (STEP | ACTION | DATE TIME)
 ├─ tests/test_ema.py          (AI-written) 12 pytest tests, all pass
 └─ eval/offline/              metrics.json + confusion_matrix / feature_importance / roc / pr / score_histogram PNGs
 ```
@@ -147,6 +147,9 @@ Waiting on supervisor (meeting not yet held):
 ## Saved for later (don't start unless I ask)
 
 Build a full syllabus + teaching website covering all theory, comparisons and related projects for this FYP. Strictly sourced, no hallucination, plain language, self-check questions.
+
+## Progress log rule (always)
+- Progress log: after every completed step (and before I quit), append a row to docs/progress-log.md. Use the same format as my Word log: a table with columns STEP | ACTION | DATE TIME, where DATE TIME is YYMMDD/HHMM in Malaysia time (get it with TZ=Asia/Kuala_Lumpur date +%y%m%d/%H%M, never guess). ACTION should say what was done, the key command or result, and any important decision or problem in plain language. Never write passwords or secrets in the log.
 
 ## Git rule (always)
 - Never add yourself (Claude/AI) as an author, co-author or contributor. No "Co-Authored-By: Claude" trailer and no "Generated with Claude Code" line in any commit, pull request or push. Commits go under my own name and my GitHub noreply email only.
